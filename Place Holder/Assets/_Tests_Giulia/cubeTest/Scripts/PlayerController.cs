@@ -7,11 +7,12 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 8f;
     public float gravity = -9.8f;
     public float rotationSpeed = 200f;
+    
     [Space(20)]
     [Header("Interaction")]
     public KeyCode runKey = KeyCode.LeftShift;
     public KeyCode interactKey = KeyCode.C;
-    public KeyCode dialogueKey = KeyCode.Space;
+    
     [Space(20)]
     private CharacterController controller;
     private Vector3 velocity;
@@ -24,39 +25,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Gérer la gravité et vérifier si le joueur est au sol
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
-        // Déplacement avec les touches directionnelles
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
 
-        // Rotation avec les flèches gauche/droite
         RotateWithArrows();
 
-        // Gérer la vitesse (marche ou course)
         float speed = Input.GetKey(runKey) ? runSpeed : walkSpeed;
         controller.Move(move * speed * Time.deltaTime);
 
-        // Appliquer la gravité
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // Déclencher une interaction
         if (Input.GetKeyDown(interactKey))
         {
             Interact();
-        }
-
-        // Lancer un dialogue
-        if (Input.GetKeyDown(dialogueKey))
-        {
-            StartDialogue();
         }
     }
 

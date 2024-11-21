@@ -8,8 +8,10 @@ public class CameraTrigger : MonoBehaviour
     public CinemachineCamera newCamera;
     public Transform player;
     public CanvasGroup infoCanvas;
-    
+    public CanvasGroup dialogueCanvas;
+
     private bool isPlayerInZone = false;
+    private bool hasDialogueShown = false;
 
     private void Start()
     {
@@ -18,6 +20,13 @@ public class CameraTrigger : MonoBehaviour
             infoCanvas.alpha = 0f;
             infoCanvas.transform.localScale = Vector3.zero;
             infoCanvas.gameObject.SetActive(false);
+        }
+
+        if (dialogueCanvas != null)
+        {
+            dialogueCanvas.alpha = 0f;
+            dialogueCanvas.transform.localScale = Vector3.zero;
+            dialogueCanvas.gameObject.SetActive(false);
         }
     }
 
@@ -30,7 +39,7 @@ public class CameraTrigger : MonoBehaviour
             if (infoCanvas != null)
             {
                 infoCanvas.gameObject.SetActive(true);
-                ShowCanvas();
+                ShowCanvas(infoCanvas);
             }
         }
     }
@@ -43,7 +52,10 @@ public class CameraTrigger : MonoBehaviour
 
             if (infoCanvas != null)
             {
-                HideCanvas();
+                HideCanvas(infoCanvas);
+                HideCanvas(dialogueCanvas);
+                hasDialogueShown = false;
+
             }
 
             if (currentCamera != null && newCamera != null)
@@ -59,6 +71,12 @@ public class CameraTrigger : MonoBehaviour
         if (isPlayerInZone && Input.GetKeyDown(KeyCode.Space))
         {
             ChangeCamera();
+
+            if (!hasDialogueShown && dialogueCanvas != null)
+            {
+                ShowCanvas(dialogueCanvas);
+                hasDialogueShown = true;
+            }
         }
     }
 
@@ -78,30 +96,32 @@ public class CameraTrigger : MonoBehaviour
 
         if (infoCanvas != null)
         {
-            HideCanvas();
+            HideCanvas(infoCanvas);
         }
     }
 
-    private void ShowCanvas()
+    private void ShowCanvas(CanvasGroup canvas)
     {
-        if (infoCanvas != null)
+        if (canvas != null)
         {
-            infoCanvas.transform.localScale = Vector3.zero;
-            infoCanvas.alpha = 0f;
+            canvas.transform.localScale = Vector3.zero;
+            canvas.alpha = 0f;
 
-            infoCanvas.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
-            infoCanvas.DOFade(1f, 0.5f);
+            canvas.gameObject.SetActive(true);
+
+            canvas.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+            canvas.DOFade(1f, 0.5f);
         }
     }
 
-    private void HideCanvas()
+    private void HideCanvas(CanvasGroup canvas)
     {
-        if (infoCanvas != null)
+        if (canvas != null)
         {
-            infoCanvas.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack);
-            infoCanvas.DOFade(0f, 0.5f).OnComplete(() =>
+            canvas.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack);
+            canvas.DOFade(0f, 0.5f).OnComplete(() =>
             {
-                infoCanvas.gameObject.SetActive(false);
+                canvas.gameObject.SetActive(false);
             });
         }
     }
