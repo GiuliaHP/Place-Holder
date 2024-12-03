@@ -1522,7 +1522,7 @@
     "m_ObjectId": "34c6e94f19b1411984f87d0f6f086d80",
     "m_Title": "Water Refraction",
     "m_Position": {
-        "x": -1586.0,
+        "x": -1586.0001220703125,
         "y": -648.0
     }
 }
@@ -2187,8 +2187,8 @@
     "m_ObjectId": "6f214920a7af447aa5c79b96a72516ac",
     "m_Title": "water color",
     "m_Position": {
-        "x": -812.13330078125,
-        "y": 128.03822326660157
+        "x": -812.0000610351563,
+        "y": 128.0
     }
 }
 
@@ -3490,6 +3490,9 @@
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
+    "m_DisableTint": false,
+    "m_AdditionalMotionVectorMode": 0,
+    "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
     "m_CustomEditorGUI": "",
     "m_SupportVFX": false
