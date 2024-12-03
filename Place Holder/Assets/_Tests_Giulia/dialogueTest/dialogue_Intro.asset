@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79e6f3614f03bf43a78aba4423b8b0f, type: 3}
+  m_Name: dialogue_Intro
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - characterName: PNJ
+    dialogueText: "Petite d\xE9mo de dialogue."
+    characterSprite: {fileID: 3748122599431454287, guid: 2696af72049194945b4717a7cf3ffbe6,
+      type: 3}
+  - characterName: PNJ
+    dialogueText: Ca marche bien, non ?
+    characterSprite: {fileID: 8847845698260986757, guid: 2696af72049194945b4717a7cf3ffbe6,
+      type: 3}
+  - characterName: PNJ
+    dialogueText: Allez sort de la zone maintenant.
+    characterSprite: {fileID: -6500760749590454082, guid: 2696af72049194945b4717a7cf3ffbe6,
+      type: 3}
