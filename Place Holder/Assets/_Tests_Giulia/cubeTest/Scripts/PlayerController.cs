@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,12 +13,17 @@ public class PlayerController : MonoBehaviour
     [Header("Interaction")]
     public KeyCode runKey = KeyCode.LeftShift;
     public KeyCode interactKey = KeyCode.C;
-    
+    public KeyCode pauseKey = KeyCode.Escape;
+
     [Space(20)]
+    public CanvasGroup pauseCanvas;
+    
+    
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
-
+    public bool pauseBool;
+    
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -26,26 +32,62 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         isGrounded = controller.isGrounded;
+
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
-
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
 
-        RotateWithArrows();
+        if (!pauseBool)
+        {
+            RotateWithArrows();
+        }
 
         float speed = Input.GetKey(runKey) ? runSpeed : walkSpeed;
         controller.Move(move * speed * Time.deltaTime);
 
+        // Appliquer la gravité
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-
-        if (Input.GetKeyDown(interactKey))
+        if (!pauseBool)
         {
-            Interact();
+            controller.Move(velocity * Time.deltaTime);
+
+            if (Input.GetKeyDown(interactKey))
+            {
+                Interact();
+            }
+
+            if (Input.GetKeyDown(pauseKey))
+            {
+                Pause();
+            }
+            
+        }
+        else if (pauseBool)
+        {
+            // Stopper la vélocité quand le jeu est en pause
+            velocity.y = 0f; // Empêche la chute
+        }
+    }
+
+
+
+
+    public void Pause()
+    {
+        pauseBool = true;
+        if (pauseCanvas != null)
+        {
+            pauseCanvas.transform.localScale = Vector3.zero;
+            pauseCanvas.alpha = 0f;
+
+            pauseCanvas.gameObject.SetActive(true);
+
+            pauseCanvas.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+            pauseCanvas.DOFade(1f, 0.5f);
         }
     }
 
@@ -66,4 +108,5 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Dialogue déclenché !");
     }
+    
 }
