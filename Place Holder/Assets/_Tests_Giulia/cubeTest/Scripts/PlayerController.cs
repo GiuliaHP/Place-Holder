@@ -17,13 +17,14 @@ public class PlayerController : MonoBehaviour
 
     [Space(20)]
     public CanvasGroup pauseCanvas;
-    
+
+    public Animator foxAnimator;  // Référence à l'Animator
     
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
     public bool pauseBool;
-    
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = -2f;
         }
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
@@ -64,17 +66,32 @@ public class PlayerController : MonoBehaviour
             {
                 Pause();
             }
-            
         }
         else if (pauseBool)
         {
             // Stopper la vélocité quand le jeu est en pause
             velocity.y = 0f; // Empêche la chute
         }
+
+        // **Mise à jour de l'Animator**
+        UpdateAnimator(move, speed);
     }
 
+    private void UpdateAnimator(Vector3 move, float speed)
+    {
+        if (foxAnimator != null)
+        {
+            // Vérifie si le personnage se déplace
+            bool isWalking = move.magnitude > 0.1f && speed == walkSpeed;
+            bool isRunning = move.magnitude > 0.1f && speed == runSpeed;
 
-
+            // Met à jour les paramètres de l'Animator
+            foxAnimator.SetBool("isWalking", isWalking);
+            foxAnimator.SetBool("isRunning", isRunning);
+            foxAnimator.SetBool("isGrounded", isGrounded);
+            foxAnimator.SetFloat("velocityY", velocity.y);
+        }
+    }
 
     public void Pause()
     {
@@ -108,5 +125,4 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Dialogue déclenché !");
     }
-    
 }
