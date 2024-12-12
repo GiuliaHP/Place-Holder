@@ -4,17 +4,23 @@ using DG.Tweening;
 
 public class CameraTrigger : MonoBehaviour
 {
+    [Header("Trigger Settings")]
+    public bool isADialogueTrigger;
+    public bool isAnAnimationTrigger;
+    [Space(20)]
     public CinemachineCamera currentCamera;
     public CinemachineCamera newCamera;
     public Transform player;
     public CanvasGroup infoCanvas;
     public CanvasGroup dialogueCanvas;
+    public Animator playerAnimator;
 
     private bool isPlayerInZone = false;
     private bool hasDialogueShown = false;
 
     private void Start()
     {
+        // Initialisation des Canvas
         if (infoCanvas != null)
         {
             infoCanvas.alpha = 0f;
@@ -53,9 +59,12 @@ public class CameraTrigger : MonoBehaviour
             if (infoCanvas != null)
             {
                 HideCanvas(infoCanvas);
+            }
+
+            if (dialogueCanvas != null)
+            {
                 HideCanvas(dialogueCanvas);
                 hasDialogueShown = false;
-
             }
 
             if (currentCamera != null && newCamera != null)
@@ -72,10 +81,15 @@ public class CameraTrigger : MonoBehaviour
         {
             ChangeCamera();
 
-            if (!hasDialogueShown && dialogueCanvas != null)
+            // Comportement selon le type de trigger
+            if (isADialogueTrigger && !hasDialogueShown && dialogueCanvas != null)
             {
                 ShowCanvas(dialogueCanvas);
                 hasDialogueShown = true;
+            }
+            else if (isAnAnimationTrigger)
+            {
+                TriggerAnimation();
             }
         }
     }
@@ -123,6 +137,17 @@ public class CameraTrigger : MonoBehaviour
             {
                 canvas.gameObject.SetActive(false);
             });
+        }
+    }
+
+    private void TriggerAnimation()
+    {
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetBool("isWalking", false);
+            playerAnimator.SetBool("isRunning", false);
+            playerAnimator.SetBool("isGrounded", false);
+            playerAnimator.SetBool("Jump", true);
         }
     }
 }

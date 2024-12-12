@@ -41,10 +41,11 @@ public class PlayerController : MonoBehaviour
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * horizontal + transform.forward * vertical;
+        Vector3 move = Vector3.zero;
 
         if (!pauseBool)
         {
+            move = transform.forward * vertical;
             RotateWithArrows();
         }
 
