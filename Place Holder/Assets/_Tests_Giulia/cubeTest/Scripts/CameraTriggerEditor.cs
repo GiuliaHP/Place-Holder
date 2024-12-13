@@ -1,23 +1,45 @@
 using UnityEditor;
 using UnityEngine;
+using Unity.Cinemachine;
 
 [CustomEditor(typeof(CameraTrigger))]
 public class CameraTriggerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        // Récupérer le script attaché
         CameraTrigger cameraTrigger = (CameraTrigger)target;
 
-        // Dessiner les champs par défaut
+        // Dessiner l'inspecteur de base
         DrawDefaultInspector();
 
-        // Afficher le champ "dialogueCanvas" uniquement si "isADialogueTrigger" est vrai
+        // Si c'est un trigger de dialogue
         if (cameraTrigger.isADialogueTrigger)
         {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Dialogue Settings", EditorStyles.boldLabel);
-            cameraTrigger.dialogueCanvas = (CanvasGroup)EditorGUILayout.ObjectField("Dialogue Canvas", cameraTrigger.dialogueCanvas, typeof(CanvasGroup), true);
+
+            // Afficher le champ pour le Canvas de dialogue
+            cameraTrigger.dialogueCanvas = (CanvasGroup)EditorGUILayout.ObjectField(
+                "Dialogue Canvas", 
+                cameraTrigger.dialogueCanvas, 
+                typeof(CanvasGroup), 
+                true
+            );
+        }
+
+        // Si c'est un trigger d'animation
+        if (cameraTrigger.isAnAnimationTrigger)
+        {
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Animation Settings", EditorStyles.boldLabel);
+
+            // Afficher le champ pour la caméra secondaire
+            cameraTrigger.secondCamera = (CinemachineCamera)EditorGUILayout.ObjectField(
+                "Second Camera", 
+                cameraTrigger.secondCamera, 
+                typeof(CinemachineVirtualCamera), // Corriger le type pour la caméra virtuelle
+                true
+            );
         }
     }
 }

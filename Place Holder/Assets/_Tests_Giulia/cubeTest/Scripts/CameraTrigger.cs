@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Unity.Cinemachine;
 using DG.Tweening;
@@ -12,11 +13,22 @@ public class CameraTrigger : MonoBehaviour
     public CinemachineCamera newCamera;
     public Transform player;
     public CanvasGroup infoCanvas;
-    public CanvasGroup dialogueCanvas;
     public Animator playerAnimator;
 
     private bool isPlayerInZone = false;
     private bool hasDialogueShown = false;
+    private bool isAnimationFinished = false;
+    private float playerCharacterControllerCenter;
+    private MoveToTarget moveJump;
+    
+    
+    [Space(40)]
+    
+    [HideInInspector, SerializeField]
+    public CanvasGroup dialogueCanvas;
+    [HideInInspector, SerializeField]
+    public CinemachineCamera secondCamera;
+
 
     private void Start()
     {
@@ -81,7 +93,6 @@ public class CameraTrigger : MonoBehaviour
         {
             ChangeCamera();
 
-            // Comportement selon le type de trigger
             if (isADialogueTrigger && !hasDialogueShown && dialogueCanvas != null)
             {
                 ShowCanvas(dialogueCanvas);
@@ -111,6 +122,12 @@ public class CameraTrigger : MonoBehaviour
         if (infoCanvas != null)
         {
             HideCanvas(infoCanvas);
+        }
+
+        if (isAnimationFinished)
+        {
+            secondCamera.gameObject.SetActive(true);
+            newCamera.gameObject.SetActive(false);
         }
     }
 
@@ -142,6 +159,17 @@ public class CameraTrigger : MonoBehaviour
 
     private void TriggerAnimation()
     {
+        playerCharacterControllerCenter = player.GetComponent<CharacterController>().center.y;
+        playerCharacterControllerCenter = 2.5f;
+        StartCoroutine(TriggerAnimationWithDelay());
+    }
+
+    private IEnumerator TriggerAnimationWithDelay()
+    {
+        
+        
+        yield return new WaitForSeconds(1f);
+
         if (playerAnimator != null)
         {
             playerAnimator.SetBool("isWalking", false);
@@ -149,5 +177,13 @@ public class CameraTrigger : MonoBehaviour
             playerAnimator.SetBool("isGrounded", false);
             playerAnimator.SetBool("Jump", true);
         }
+        moveJump = player.GetComponent<MoveToTarget>();
+        player.GetComponent<PlayerController>().pauseBool = true;
+        moveJump.enabled = true;
+
+        yield return new WaitForSeconds(0.7f);
+
+        isAnimationFinished = true;
+        ChangeCamera();
     }
 }
