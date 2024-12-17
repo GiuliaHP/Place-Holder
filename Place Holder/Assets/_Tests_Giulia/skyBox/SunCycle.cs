@@ -13,9 +13,13 @@ public class SunCycle : MonoBehaviour
     public Gradient skyTintColorGradient;
 
     [Header("Water Material Settings")]
-    public Gradient waterTintColorGradient;
+    public Gradient waterTintColorGradient, waterBorderTintColorGradient;
     public GameObject sea;
-    public string deepWaterColorProperty = "_DeepWater";
+    public string deepWaterColorProperty = "_DeepWater", shallowWaterColorProperty = "_ShallowWater";
+
+    [Header("Environment Lighting Settings")]
+    public AnimationCurve ambientIntensityCurve;
+    public float ambientIntensityMultiplier = 1f;
     
     private float cycleProgress = 0f;
     private Material skyboxMaterial;
@@ -55,6 +59,7 @@ public class SunCycle : MonoBehaviour
         AnimateFog();
         AnimateSkybox();
         AnimateWater();
+        AnimateEnvironmentLighting();
     }
 
     private void AnimateFog()
@@ -76,7 +81,17 @@ public class SunCycle : MonoBehaviour
         if (waterMaterial != null)
         {
             Color deepWaterColor = waterTintColorGradient.Evaluate(cycleProgress);
+            Color shallowWaterColor = waterBorderTintColorGradient.Evaluate(cycleProgress);
+
             waterMaterial.SetColor(deepWaterColorProperty, deepWaterColor);
+            waterMaterial.SetColor(shallowWaterColorProperty, shallowWaterColor);
+            skyboxMaterial.SetColor("_GroundColor", deepWaterColor);
         }
+    }
+
+    private void AnimateEnvironmentLighting()
+    {
+        float ambientIntensity = ambientIntensityCurve.Evaluate(cycleProgress) * ambientIntensityMultiplier;
+        RenderSettings.ambientIntensity = ambientIntensity;
     }
 }

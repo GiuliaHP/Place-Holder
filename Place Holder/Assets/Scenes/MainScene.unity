@@ -1976,24 +1976,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationAxis: {x: 0, y: 0, z: 1}
-  cycleDuration: 60
+  cycleDuration: 30
   fogColorGradient:
     serializedVersion: 2
-    key0: {r: 0.34042364, g: 0.6374052, b: 0.8490566, a: 1}
-    key1: {r: 0.29364103, g: 0.5454638, b: 0.73043203, a: 1}
-    key2: {r: 0.04650232, g: 0.05976448, b: 0.103773594, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0.04650232, g: 0.05976448, b: 0.103773594, a: 0}
-    key5: {r: 0.29364103, g: 0.5454638, b: 0.73043203, a: 0}
-    key6: {r: 0.34042364, g: 0.6374052, b: 0.8490566, a: 0}
+    key0: {r: 0.29364103, g: 0.5454638, b: 0.73043203, a: 1}
+    key1: {r: 0.020425422, g: 0.023112105, b: 0.084905684, a: 1}
+    key2: {r: 0.020425422, g: 0.023112105, b: 0.084905684, a: 0}
+    key3: {r: 0.29364103, g: 0.5454638, b: 0.73043203, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 13107
-    ctime2: 19661
-    ctime3: 32768
-    ctime4: 45875
-    ctime5: 52428
-    ctime6: 65535
+    ctime1: 22937
+    ctime2: 42598
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
     ctime7: 0
     atime0: 0
     atime1: 65535
@@ -2005,15 +2005,15 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 7
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   skyTintColorGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 0.3537736, g: 0.5578985, b: 1, a: 1}
     key2: {r: 0, g: 0.5566038, b: 0.3280611, a: 0}
-    key3: {r: 0.7169812, g: 0, b: 0.14614005, a: 0}
-    key4: {r: 0.7169812, g: 0, b: 0.14614005, a: 0}
+    key3: {r: 0.4433962, g: 0.073833264, b: 0, a: 0}
+    key4: {r: 0.4433962, g: 0.073833264, b: 0, a: 0}
     key5: {r: 0, g: 0.5566038, b: 0.3280611, a: 0}
     key6: {r: 0.3537736, g: 0.5578985, b: 1, a: 0}
     key7: {r: 1, g: 1, b: 1, a: 0}
@@ -2039,26 +2039,56 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   waterTintColorGradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0.8310704, b: 1, a: 1}
+    key0: {r: 0, g: 0.8310704, b: 1, a: 0.78431374}
+    key1: {r: 0.04561232, g: 0.054773502, b: 0.23584908, a: 1}
+    key2: {r: 0.04561232, g: 0.054773502, b: 0.23584908, a: 1}
+    key3: {r: 0, g: 0.8310704, b: 1, a: 0.78431374}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 14418
+    ctime1: 22937
+    ctime2: 42598
+    ctime3: 51117
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 19661
+    atime2: 45875
+    atime3: 65535
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 4
+  waterBorderTintColorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0.627451}
     key1: {r: 0.49803925, g: 0.7568628, b: 0.99607843, a: 1}
-    key2: {r: 0.24705881, g: 0.30196077, b: 0.32941175, a: 0}
-    key3: {r: 0.24705881, g: 0.30196077, b: 0.32941175, a: 0}
+    key2: {r: 0.08966714, g: 0.27016667, b: 0.6132076, a: 1}
+    key3: {r: 0.08966714, g: 0.27016667, b: 0.6132076, a: 0.627451}
     key4: {r: 0.49803925, g: 0.7568628, b: 0.99607843, a: 0}
-    key5: {r: 0, g: 0.8310704, b: 1, a: 0}
+    key5: {r: 1, g: 1, b: 1, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 16384
-    ctime2: 22937
-    ctime3: 42598
-    ctime4: 49151
+    ctime1: 13107
+    ctime2: 26214
+    ctime3: 39321
+    ctime4: 52428
     ctime5: 65535
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
+    atime1: 26214
+    atime2: 39321
+    atime3: 65535
     atime4: 0
     atime5: 0
     atime6: 0
@@ -2066,9 +2096,44 @@ MonoBehaviour:
     m_Mode: 0
     m_ColorSpace: -1
     m_NumColorKeys: 6
-    m_NumAlphaKeys: 2
+    m_NumAlphaKeys: 4
   sea: {fileID: 1439012758}
   deepWaterColorProperty: _DeepWater
+  shallowWaterColorProperty: _ShallowWater
+  ambientIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -1.6981132
+      outSlope: -1.6981132
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.15094341
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.6981132
+      outSlope: 1.6981132
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ambientIntensityMultiplier: 1
 --- !u!1 &1326402335
 GameObject:
   m_ObjectHideFlags: 0
