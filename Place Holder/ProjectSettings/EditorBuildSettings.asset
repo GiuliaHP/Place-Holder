@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: d4dbe7cdce4b4e0469160a9779ccb03c
   - enabled: 1
-    path: Assets/_Tests_Giulia/TEST_Giulia.unity
+    path: Assets/Scenes/MainScene.unity
     guid: b7cf97915edbabb4d92731ef4f452853
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
