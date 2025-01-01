@@ -911,6 +911,7 @@ MonoBehaviour:
   sceneToPlayName: TEST_Giulia
   canvasToHide: {fileID: 28699832}
   canvasToShow: {fileID: 2068992118}
+  playerScript: {fileID: 0}
 --- !u!222 &262794426
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2237,6 +2238,7 @@ MonoBehaviour:
   sceneToPlayName: TEST_Giulia
   canvasToHide: {fileID: 0}
   canvasToShow: {fileID: 0}
+  playerScript: {fileID: 0}
 --- !u!114 &1023443969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2788,9 +2790,10 @@ MonoBehaviour:
   idleColor: {r: 0.5529412, g: 0.6117647, b: 0.8196079, a: 0.19607843}
   hoverColor: {r: 0.6690548, g: 0.72332823, b: 0.9150943, a: 0.56078434}
   clickColor: {r: 0.2953008, g: 0.40496668, b: 0.7924528, a: 1}
-  sceneToPlayName: TEST_Giulia
+  sceneToPlayName: MainScene
   canvasToHide: {fileID: 0}
   canvasToShow: {fileID: 0}
+  playerScript: {fileID: 0}
 --- !u!114 &1196845596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2996,6 +2999,7 @@ MonoBehaviour:
   sceneToPlayName: TEST_Giulia
   canvasToHide: {fileID: 2068992118}
   canvasToShow: {fileID: 28699832}
+  playerScript: {fileID: 0}
 --- !u!114 &1212416394
 MonoBehaviour:
   m_ObjectHideFlags: 0
