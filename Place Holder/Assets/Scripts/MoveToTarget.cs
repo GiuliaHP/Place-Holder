@@ -7,6 +7,7 @@ public class MoveToTarget : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotationSpeed = 5f;
     public float stoppingDistance = 0.5f;
+    public bool orientPlayerToTrigger = true;
     
     void Update()
     {
@@ -27,7 +28,7 @@ public class MoveToTarget : MonoBehaviour
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
 
-        if (direction != Vector3.zero)
+        if (direction != Vector3.zero && orientPlayerToTrigger)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);

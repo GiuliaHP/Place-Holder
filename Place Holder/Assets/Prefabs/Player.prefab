@@ -74,6 +74,7 @@ MonoBehaviour:
   moveSpeed: 10
   rotationSpeed: 10
   stoppingDistance: 1
+  orientPlayerToTrigger: 1
 --- !u!143 &5439012575610411830
 CharacterController:
   m_ObjectHideFlags: 0

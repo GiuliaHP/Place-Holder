@@ -2,104 +2,159 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ButtonInteraction : MonoBehaviour
 {
-    [Space (5)]
+    [Space(5)]
     [Header("Animation Durations")]
     public float hoverDuration = 0.2f;
     public float clickDuration = 0.1f;
     public float idleDuration = 0.3f;
-    [Space (5)]
+    [Space(5)]
     [Header("Animation Settings")]
     public Vector3 hoverScale = new Vector3(1.1f, 1.1f, 1f);
     public Vector3 clickScale = new Vector3(0.95f, 0.95f, 1f);
     public Vector3 idleScale = Vector3.one;
-    [Space (5)]
+    [Space(5)]
     public Color idleColor = Color.white;
     public Color hoverColor = Color.yellow;
-    public Color clickColor = Color.green; 
+    public Color clickColor = Color.green;
     [Space(5)]
-    public String sceneToPlayName = "TEST_Giulia";
     public Canvas canvasToHide, canvasToShow;
     public PlayerController playerScript;
+    public Canvas transitionCanvas;
     [Space(5)]
-    private Image buttonImage; // Image du bouton
-    private bool isSelected = false; // Garde la trace de l'état sélectionné
-    private Button button; // Référence au bouton
-    private RectTransform rectTransform; // Transform du bouton (pour les animations de taille, par exemple)
+    private Button[] buttons; // Tous les boutons enfants
 
     void Start()
     {
-        button = gameObject.GetComponent<Button>();
-        rectTransform = GetComponent<RectTransform>();
-        buttonImage = button.GetComponent<Image>();
+        buttons = GetComponentsInChildren<Button>();
 
-        // Associe les événements
-        button.onClick.AddListener(OnClick);
+        foreach (Button btn in buttons)
+        {
+            btn.onClick.AddListener(() => OnClick(btn));
+
+            EventTrigger trigger = btn.gameObject.AddComponent<EventTrigger>();
+
+            // PointerEnter
+            EventTrigger.Entry entryEnter = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerEnter
+            };
+            entryEnter.callback.AddListener((eventData) => OnMouseEnter(btn));
+            trigger.triggers.Add(entryEnter);
+
+            // PointerExit
+            EventTrigger.Entry entryExit = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerExit
+            };
+            entryExit.callback.AddListener((eventData) => OnMouseExit(btn));
+            trigger.triggers.Add(entryExit);
+        }
+
+
         ResetToIdle();
     }
 
-    public void OnMouseEnter()
+    public void OnMouseEnter(Button button)
     {
-        if (!isSelected) AnimateHover();
+        AnimateHover(button);
     }
 
-    public void OnMouseExit()
+    public void OnMouseExit(Button button)
     {
-        if (!isSelected) ResetToIdle();
+        ResetToIdle(button);
     }
 
-    public void OnClick()
+    public void OnClick(Button clickedButton)
     {
-        AnimateClick();
-        isSelected = true;
+        AnimateClick(clickedButton);
 
-        // Rétablir l'état après un clic
-        Invoke(nameof(ResetSelection), clickDuration * 2);
-    }
+        Debug.Log($"Bouton cliqué : {clickedButton.name}");
 
-    private void ResetSelection()
-    {
-        isSelected = false;
-        ResetToIdle();
+        // Exemple d'action pour le bouton Play
+        if (clickedButton.name == "PlayButton")
+        {
+            Play();
+        }
     }
 
     private void ResetToIdle()
     {
-        rectTransform.DOScale(idleScale, idleDuration);
-        if (buttonImage != null)
-            buttonImage.DOColor(idleColor, idleDuration);
-    }
-
-    private void AnimateHover()
-    {
-        rectTransform.DOScale(hoverScale, hoverDuration);
-        if (buttonImage != null)
-            buttonImage.DOColor(hoverColor, hoverDuration);
-    }
-
-    private void AnimateClick()
-    {
-        rectTransform.DOScale(clickScale, clickDuration).OnComplete(() =>
+        foreach (Button btn in buttons)
         {
-            rectTransform.DOScale(hoverScale, hoverDuration); // Revenir à l'état survolé
+            ResetToIdle(btn);
+        }
+    }
+
+    private void ResetToIdle(Button button)
+    {
+        RectTransform rect = button.GetComponent<RectTransform>();
+        Image img = button.GetComponent<Image>();
+
+        rect.DOScale(idleScale, idleDuration);
+        if (img != null)
+            img.DOColor(idleColor, idleDuration);
+    }
+
+    private void AnimateHover(Button button)
+    {
+        RectTransform rect = button.GetComponent<RectTransform>();
+        Image img = button.GetComponent<Image>();
+
+        rect.DOScale(hoverScale, hoverDuration);
+        if (img != null)
+            img.DOColor(hoverColor, hoverDuration);
+    }
+
+    private void AnimateClick(Button button)
+    {
+        RectTransform rect = button.GetComponent<RectTransform>();
+        Image img = button.GetComponent<Image>();
+
+        rect.DOScale(clickScale, clickDuration).OnComplete(() =>
+        {
+            rect.DOScale(hoverScale, hoverDuration);
         });
 
-        if (buttonImage != null)
-            buttonImage.DOColor(clickColor, clickDuration).OnComplete(() =>
+        if (img != null)
+            img.DOColor(clickColor, clickDuration).OnComplete(() =>
             {
-                buttonImage.DOColor(hoverColor, hoverDuration);
+                img.DOColor(hoverColor, hoverDuration);
             });
     }
 
     public void Play()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToPlayName);
+        if (transitionCanvas != null)
+        {
+            transitionCanvas.gameObject.SetActive(true);
+
+            CircleTransition transitionScript = transitionCanvas.GetComponentInChildren<CircleTransition>();
+
+            if (transitionScript != null)
+            {
+                transitionScript.grow = false; // Réduction du cercle
+                transitionScript.StartCoroutine("Start");
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Lair");
+        }
     }
 
-    public void Credits()
+    public void ShowAndHideCanvas()
     {
+
+        if (playerScript != null)
+        {
+            playerScript.pauseBool = false;
+        }
+        
         if (canvasToShow != null)
         {
             canvasToShow.gameObject.SetActive(true);
@@ -109,12 +164,6 @@ public class ButtonInteraction : MonoBehaviour
         {
             canvasToHide.gameObject.SetActive(false);
         }
-
-        if (playerScript != null)
-        {
-            playerScript.pauseBool = false;
-        }
-        
     }
 
     public void Quit()

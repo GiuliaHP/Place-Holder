@@ -2,37 +2,49 @@ using System.Collections;
 using UnityEngine;
 using Unity.Cinemachine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class CameraTrigger : MonoBehaviour
 {
+    [Space(50)]
     [Header("Trigger Settings")]
     public bool isADialogueTrigger;
     public bool isAnAnimationTrigger;
-    [Space(20)]
+    
+    [Space(50)]
+    [Header("Cameras and other parameters")]
     public CinemachineCamera currentCamera;
     public CinemachineCamera newCamera;
     public Transform player;
     public CanvasGroup infoCanvas;
-    public Animator playerAnimator;
 
+    //[Space(50)]
+    //[Header("Booleans Because My Script Don't Work")]
     private bool isPlayerInZone = false;
     private bool hasDialogueShown = false;
     private bool isAnimationFinished = false;
+    
+    
     private float playerCharacterControllerCenter;
     private MoveToTarget moveJump;
     
     
-    [Space(40)]
+    [Space(50)]
     
     [HideInInspector, SerializeField]
     public CanvasGroup dialogueCanvas;
     [HideInInspector, SerializeField]
     public CinemachineCamera secondCamera;
+    [HideInInspector, SerializeField]
+    public Animator playerAnimator;
+    [HideInInspector, SerializeField]
+    public string animToPlay = "Jump";
+    [HideInInspector, SerializeField]
+    public string nextAnimToPlay;
 
 
     private void Start()
     {
-        // Initialisation des Canvas
         if (infoCanvas != null)
         {
             infoCanvas.alpha = 0f;
@@ -107,6 +119,7 @@ public class CameraTrigger : MonoBehaviour
 
     private void ChangeCamera()
     {
+
         if (currentCamera != null)
         {
             currentCamera.gameObject.SetActive(false);
@@ -166,24 +179,58 @@ public class CameraTrigger : MonoBehaviour
 
     private IEnumerator TriggerAnimationWithDelay()
     {
-        
-        
         yield return new WaitForSeconds(1f);
+        
+        player.GetComponent<PlayerController>().pauseBool = true;
+        
+        moveJump = player.GetComponent<MoveToTarget>();
+        if (moveJump != null)
+        {
+            moveJump.enabled = true;
+        }
+        
 
         if (playerAnimator != null)
         {
-            playerAnimator.SetBool("isWalking", false);
-            playerAnimator.SetBool("isRunning", false);
-            playerAnimator.SetBool("isGrounded", false);
-            playerAnimator.SetBool("Jump", true);
+            ResetAnimatorBools();
+            playerAnimator.SetBool(animToPlay, true);
+
+            while (true)
+            {
+                AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+
+                if ((stateInfo.IsName("Sleep") && stateInfo.normalizedTime >= 1f) || stateInfo.IsName("Jump"))
+                {
+                    if (!string.IsNullOrEmpty(nextAnimToPlay))
+                    {
+                        playerAnimator.SetBool(nextAnimToPlay, true);
+                    }
+
+                    else
+                    {
+                        isAnimationFinished = true;
+            
+                        yield return new WaitForSeconds(0.5f);
+                        ChangeCamera();
+            
+                        yield return new WaitForSeconds(1f);
+                        SceneManager.LoadScene("Lair");
+                    }
+                }
+
+                yield return null;
+            }
         }
-        moveJump = player.GetComponent<MoveToTarget>();
-        player.GetComponent<PlayerController>().pauseBool = true;
-        moveJump.enabled = true;
-
-        yield return new WaitForSeconds(0.7f);
-
-        isAnimationFinished = true;
-        ChangeCamera();
     }
+
+    private void ResetAnimatorBools()
+    {
+        playerAnimator.SetBool("isWalking", false);
+        playerAnimator.SetBool("isRunning", false);
+        playerAnimator.SetBool("isGrounded", false);
+        playerAnimator.SetBool("Jump", false);
+        playerAnimator.SetBool("Sleep", false);
+        playerAnimator.SetBool("SleepLoop", false);
+    }
+
 }
