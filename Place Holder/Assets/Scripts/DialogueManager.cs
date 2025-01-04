@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject animatedObject;
     public string animatorBoolParameter = "IsActive"; // Nom du booléen dans l'Animator
     public string animationStateName = "AnimationState"; // Nom de l'état de l'animation à surveiller
+    public PersistentManager persMan;
 
     private Animator objectAnimator;
     private int currentDialogueIndex = 0;
@@ -79,6 +80,11 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogueIndex == 2 && objectAnimator != null)
         {
             objectAnimator.SetBool(animatorBoolParameter, true);
+
+            Debug.Log("ACTIVATION OBEJT AUTRE SCENE");
+            // Active le booléen global dans le gestionnaire persistant
+            persMan.triggerObjectInOtherScene = true;
+            
             StartCoroutine(WaitForAnimationAndContinue());
         }
         else if (currentDialogueIndex < dialogueData.dialogueLines.Length)
@@ -107,17 +113,15 @@ public class DialogueManager : MonoBehaviour
 
         if (objectAnimator != null)
         {
+            
             // Attend la fin de l'animation
             yield return new WaitForSeconds(objectAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-            // Désactive l'objet local
-            animatedObject.SetActive(false);
-
-            // Active le booléen global dans le gestionnaire persistant
-            PersistentManager.Instance.triggerObjectInOtherScene = true;
-
             // Continue le dialogue
             NextDialogue();
+
+            // Désactive l'objet local
+            animatedObject.SetActive(false);
         }
 
         // Continuer le dialogue

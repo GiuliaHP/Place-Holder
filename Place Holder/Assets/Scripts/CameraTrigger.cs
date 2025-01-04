@@ -3,6 +3,25 @@ using UnityEngine;
 using Unity.Cinemachine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEngine;
+
+public static class GameObjectUtils
+{
+    public static GameObject FindInactiveObjectByName(string objectName)
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name == objectName) // Vérifie si le nom correspond
+            {
+                return obj; // Retourne le GameObject correspondant
+            }
+        }
+
+        Debug.LogWarning($"GameObject with name '{objectName}' not found.");
+        return null;
+    }
+}
 
 public class CameraTrigger : MonoBehaviour
 {
@@ -110,7 +129,7 @@ public class CameraTrigger : MonoBehaviour
                 ShowCanvas(dialogueCanvas);
                 hasDialogueShown = true;
             }
-            else if (isAnAnimationTrigger)
+            else if ((isAnAnimationTrigger) && playerAnimator != null)
             {
                 TriggerAnimation();
             }
@@ -119,7 +138,26 @@ public class CameraTrigger : MonoBehaviour
 
     private void ChangeCamera()
     {
+        StartCoroutine(ChangeCameraWithDelay());
+    }
+    
+    private void ActivateObject(string objectName)
+    {
+        GameObject targetObject = GameObjectUtils.FindInactiveObjectByName(objectName);
 
+        if (targetObject != null)
+        {
+            targetObject.SetActive(true);
+            Debug.Log($"{objectName} a été activé !");
+        }
+        else
+        {
+            Debug.LogWarning($"Impossible de trouver l'objet nommé '{objectName}'.");
+        }
+    }
+    
+    private IEnumerator ChangeCameraWithDelay()
+    {
         if (currentCamera != null)
         {
             currentCamera.gameObject.SetActive(false);
@@ -130,17 +168,52 @@ public class CameraTrigger : MonoBehaviour
             newCamera.gameObject.SetActive(true);
             newCamera.Follow = player;
             newCamera.LookAt = player;
-        }
 
+            if (secondCamera != null && secondCamera.name == "LetterZoomCamera") // ZOOM LETTRE
+            {
+
+                yield return new WaitForSeconds(1f); // Ajoute un délai avant d'activer la deuxième caméra
+                secondCamera.gameObject.SetActive(true);
+                newCamera.gameObject.SetActive(false);
+                ActivateObject("bedTrigger");
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    
+                    isPlayerInZone = false;
+
+                    if (infoCanvas != null)
+                    {
+                        HideCanvas(infoCanvas);
+                    }
+
+                    if (dialogueCanvas != null)
+                    {
+                        HideCanvas(dialogueCanvas);
+                        hasDialogueShown = false;
+                    }
+
+                    if (currentCamera != null && newCamera != null)
+                    {
+                        newCamera.gameObject.SetActive(false);
+                        currentCamera.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+        
         if (infoCanvas != null)
         {
             HideCanvas(infoCanvas);
         }
-
+    
         if (isAnimationFinished)
         {
-            secondCamera.gameObject.SetActive(true);
-            newCamera.gameObject.SetActive(false);
+            if (secondCamera != null)
+            {
+                secondCamera.gameObject.SetActive(true);
+                newCamera.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -180,15 +253,13 @@ public class CameraTrigger : MonoBehaviour
     private IEnumerator TriggerAnimationWithDelay()
     {
         yield return new WaitForSeconds(1f);
-        
+
         player.GetComponent<PlayerController>().pauseBool = true;
-        
         moveJump = player.GetComponent<MoveToTarget>();
         if (moveJump != null)
         {
             moveJump.enabled = true;
         }
-        
 
         if (playerAnimator != null)
         {
@@ -199,22 +270,24 @@ public class CameraTrigger : MonoBehaviour
             {
                 AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
 
-                if ((stateInfo.IsName("Sleep") && stateInfo.normalizedTime >= 1f) || stateInfo.IsName("Jump"))
+                if (stateInfo.IsName(animToPlay) && stateInfo.normalizedTime >= 1f)
                 {
                     if (!string.IsNullOrEmpty(nextAnimToPlay))
                     {
                         playerAnimator.SetBool(nextAnimToPlay, true);
+                        yield break;
                     }
-
                     else
                     {
                         isAnimationFinished = true;
-            
                         yield return new WaitForSeconds(0.5f);
+
                         ChangeCamera();
-            
                         yield return new WaitForSeconds(1f);
+
+                        // Transition vers une nouvelle scène
                         SceneManager.LoadScene("Lair");
+                        yield break;
                     }
                 }
 

@@ -1657,6 +1657,7 @@ MonoBehaviour:
   animatedObject: {fileID: 49088532}
   animatorBoolParameter: letterAnim
   animationStateName: Letter Animation
+  persMan: {fileID: 647724552}
 --- !u!1 &619999154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,7 +1676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &619999155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1771,7 +1772,7 @@ GameObject:
   - component: {fileID: 647724553}
   - component: {fileID: 647724552}
   m_Layer: 0
-  m_Name: _____PERSISTENT
+  m_Name: PersistentManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3063,18 +3064,18 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   waterTintColorGradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0.8310704, b: 1, a: 0.78431374}
+    key0: {r: 0.027450982, g: 0.99607843, b: 0.99607843, a: 0.78431374}
     key1: {r: 0.04561232, g: 0.054773502, b: 0.23584908, a: 1}
     key2: {r: 0.04561232, g: 0.054773502, b: 0.23584908, a: 1}
-    key3: {r: 0, g: 0.8310704, b: 1, a: 0.78431374}
+    key3: {r: 0.027450982, g: 0.99607843, b: 0.99607843, a: 0.78431374}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 14418
+    ctime0: 13107
     ctime1: 22937
     ctime2: 42598
-    ctime3: 51117
+    ctime3: 52428
     ctime4: 0
     ctime5: 0
     ctime6: 0
@@ -5367,16 +5368,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2483245507246260756, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
-        type: 3}
-      propertyPath: runSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2483245507246260756, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
-        type: 3}
-      propertyPath: walkSpeed
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 2483245507246260756, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: pauseCanvas
