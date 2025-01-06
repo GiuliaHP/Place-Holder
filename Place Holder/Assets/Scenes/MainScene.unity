@@ -425,8 +425,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28168501}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00891673, y: 0.8172983, z: -0.012651982, w: 0.5760069}
-  m_LocalPosition: {x: 233.41235, y: 15.5, z: -0.9872644}
+  m_LocalRotation: {x: 0.011857163, y: -0.6427106, z: 0.009949341, w: 0.7659527}
+  m_LocalPosition: {x: 22.848078, y: 8.9, z: -56.73648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1049,11 +1049,11 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 99e3d82e7b8275d4984959b4116c020b, type: 2}
-  m_TreeDistance: 5000
+  m_TreeDistance: 100
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_TreeMaximumFullLODCount: 30
+  m_DetailObjectDistance: 60
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -1181,8 +1181,8 @@ MonoBehaviour:
   terrainListeners:
   - {fileID: 242291990}
   bounds:
-    m_Center: {x: 0, y: 300, z: 0}
-    m_Extent: {x: 500, y: 300, z: 500}
+    m_Center: {x: 539.5, y: 300, z: 0}
+    m_Extent: {x: 1039.5, y: 300, z: 500}
   filterShader: {fileID: 4800000, guid: 0f44df78e3d64d9cb2616cac3d84cb77, type: 3}
 --- !u!4 &299400021
 Transform:
@@ -1531,8 +1531,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474895332}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.008916732, y: 0.8172983, z: -0.012651983, w: 0.57600695}
-  m_LocalPosition: {x: 233.41235, y: 15.5, z: -0.9872644}
+  m_LocalRotation: {x: 0.011857163, y: -0.6427106, z: 0.009949342, w: 0.7659527}
+  m_LocalPosition: {x: 22.848078, y: 8.9, z: -56.73648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1750,7 +1750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &619999155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4342,7 +4342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: bf6b5a43b4058eb4caf911d4602fcd58, type: 2}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.17814878, g: 0.4145814, b: 0.7207546, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5440,22 +5440,22 @@ PrefabInstance:
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 242.83
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.5
+      value: 7.9
       objectReference: {fileID: 0}
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.35
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5760758
+      value: 0.7660445
       objectReference: {fileID: 0}
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
@@ -5465,7 +5465,7 @@ PrefabInstance:
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.81739634
+      value: -0.6427876
       objectReference: {fileID: 0}
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
@@ -5480,7 +5480,7 @@ PrefabInstance:
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 109.65
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 3944793816344870768, guid: 0d7c870a69e12df4b9a2fad8c53f5b87,
         type: 3}

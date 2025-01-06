@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: b7cf97915edbabb4d92731ef4f452853
+  - enabled: 1
+    path: Assets/Scenes/SnowScene.unity
+    guid: 8a1808531a4053242a5b323ca72f5691
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

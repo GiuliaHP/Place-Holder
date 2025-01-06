@@ -2742,6 +2742,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToActivate: {fileID: 1645880222}
+  transitionScript: {fileID: 0}
+  newScene: snowScene
 --- !u!1 &1336548765
 GameObject:
   m_ObjectHideFlags: 0
@@ -3332,7 +3334,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0bf82f6e46d4e9544b804b492b6f4d8a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3370,6 +3372,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToActivate: {fileID: 1645880222}
+  transitionScript: {fileID: 1048113693}
+  newScene: SnowScene
 --- !u!4 &1645880224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0bf82f6e46d4e9544b804b492b6f4d8a,
