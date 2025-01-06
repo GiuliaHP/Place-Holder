@@ -15,17 +15,13 @@ MonoBehaviour:
   dialogueLines:
   - characterName: "H\xE9ron"
     dialogueText: "Oh, tu m'as trouv\xE9 !"
-    characterSprite: {fileID: 3748122599431454287, guid: 2696af72049194945b4717a7cf3ffbe6,
-      type: 3}
+    characterSprite: {fileID: 21300000, guid: b52330bf198532e4b92de17a6c9fe15a, type: 3}
   - characterName: "H\xE9ron"
     dialogueText: Tiens, renard, j'ai une lettre pour toi !
-    characterSprite: {fileID: 8847845698260986757, guid: 2696af72049194945b4717a7cf3ffbe6,
-      type: 3}
+    characterSprite: {fileID: 21300000, guid: b52330bf198532e4b92de17a6c9fe15a, type: 3}
   - characterName: "H\xE9ron"
     dialogueText: Mon travail est fait.
-    characterSprite: {fileID: -6500760749590454082, guid: 2696af72049194945b4717a7cf3ffbe6,
-      type: 3}
+    characterSprite: {fileID: 21300000, guid: be5f8c11f7c521941aaab6d84c4b66b3, type: 3}
   - characterName: "H\xE9ron"
     dialogueText: Il est l'heure de rentrer chez toi, l'hiver arrive !
-    characterSprite: {fileID: -6500760749590454082, guid: 2696af72049194945b4717a7cf3ffbe6,
-      type: 3}
+    characterSprite: {fileID: 21300000, guid: b52330bf198532e4b92de17a6c9fe15a, type: 3}

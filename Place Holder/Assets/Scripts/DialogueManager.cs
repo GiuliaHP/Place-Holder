@@ -29,6 +29,7 @@ public class DialogueManager : MonoBehaviour
     private Animator objectAnimator;
     private int currentDialogueIndex = 0;
     private bool isTyping = false;
+    private bool isAnimationInProgress = false;
 
     private void Start()
     {
@@ -45,7 +46,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(nextDialogueKey) && !isTyping)
+        if (Input.GetKeyDown(nextDialogueKey) && !isTyping && !isAnimationInProgress)
         {
             NextDialogue();
         }
@@ -76,15 +77,13 @@ public class DialogueManager : MonoBehaviour
     {
         currentDialogueIndex++;
 
-        // Si on est à la deuxième ligne, activer le booléen
         if (currentDialogueIndex == 2 && objectAnimator != null)
         {
             objectAnimator.SetBool(animatorBoolParameter, true);
 
-            Debug.Log("ACTIVATION OBEJT AUTRE SCENE");
-            // Active le booléen global dans le gestionnaire persistant
+            Debug.Log("Activation de l'objet dans une autre scène.");
             persMan.triggerObjectInOtherScene = true;
-            
+
             StartCoroutine(WaitForAnimationAndContinue());
         }
         else if (currentDialogueIndex < dialogueData.dialogueLines.Length)
@@ -99,30 +98,22 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator WaitForAnimationAndContinue()
     {
-        // Attendre que l'animation commence
-        while (!objectAnimator.GetCurrentAnimatorStateInfo(0).IsName(animationStateName))
+        isAnimationInProgress = true;
+
+        // Attendre le début de l'animation
+        while (!objectAnimator.GetCurrentAnimatorStateInfo(0).IsName(animationStateName) || 
+               objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;
         }
 
-        // Attendre que l'animation soit terminée
-        while (objectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        // Désactiver l'objet après l'animation
+        if (animatedObject != null)
         {
-            yield return null;
-        }
-
-        if (objectAnimator != null)
-        {
-            
-            // Attend la fin de l'animation
-            yield return new WaitForSeconds(objectAnimator.GetCurrentAnimatorStateInfo(0).length);
-
-            // Continue le dialogue
-            NextDialogue();
-
-            // Désactive l'objet local
             animatedObject.SetActive(false);
         }
+
+        isAnimationInProgress = false;
 
         // Continuer le dialogue
         if (currentDialogueIndex < dialogueData.dialogueLines.Length)
@@ -133,11 +124,12 @@ public class DialogueManager : MonoBehaviour
         {
             EndDialogue();
         }
-        
     }
 
     private void EndDialogue()
     {
+        dialogueText.text = ""; // Réinitialise le texte
+        characterNameText.text = ""; // Réinitialise le nom du personnage
         gameObject.SetActive(false);
     }
 }

@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Unity.Cinemachine;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 
 public static class GameObjectUtils
 {
@@ -61,9 +62,17 @@ public class CameraTrigger : MonoBehaviour
     [HideInInspector, SerializeField]
     public string nextAnimToPlay;
 
+    public GameObject heronZoomCamera;
+    private Boolean asHeronBeenZoomed = false;
+
 
     private void Start()
     {
+        if (heronZoomCamera != null)
+        {
+            heronZoomCamera.SetActive(false);
+        }
+        
         if (infoCanvas != null)
         {
             infoCanvas.alpha = 0f;
@@ -215,6 +224,17 @@ public class CameraTrigger : MonoBehaviour
                 newCamera.gameObject.SetActive(false);
             }
         }
+
+        if ((newCamera.name == "héronFocusCamera") && !asHeronBeenZoomed)
+        {
+            asHeronBeenZoomed = true;
+            yield return new WaitForSeconds(1f);
+            heronZoomCamera.SetActive(true);
+            newCamera.gameObject.SetActive(false);
+            yield return new WaitForSeconds(3f);
+            Destroy(heronZoomCamera);
+            newCamera.gameObject.SetActive(true);
+        }
     }
 
     private void ShowCanvas(CanvasGroup canvas)
@@ -245,7 +265,6 @@ public class CameraTrigger : MonoBehaviour
 
     private void TriggerAnimation()
     {
-        playerCharacterControllerCenter = player.GetComponent<CharacterController>().center.y;
         playerCharacterControllerCenter = 2.5f;
         StartCoroutine(TriggerAnimationWithDelay());
     }

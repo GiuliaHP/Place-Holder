@@ -1732,6 +1732,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 1727889513}
   animToPlay: Sleep
   nextAnimToPlay: SleepLoop
+  heronZoomCamera: {fileID: 0}
 --- !u!1 &838871870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2983,6 +2984,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 0}
   animToPlay: 
   nextAnimToPlay: 
+  heronZoomCamera: {fileID: 0}
 --- !u!65 &1623100506
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16672,12 +16674,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Cher renard...\n\n\r\n\tLorem ipsum dolor sit amet, consectetur adipiscing
-    elit. Duis at diam ac risus sollicitudin fermentum id vitae ligula.\n\n\tDonec
-    est mauris, volutpat sit amet dictum sit amet, sollicitudin at risus. Interdum
-    et malesuada fames ac ante ipsum primis in faucibus.\n\n\tCras consequat suscipit
-    felis, id accumsan sem placerat a. Pellentesque laoreet rhoncus ipsum id tristique.\n\n\nAvec
-    amour,\nTa renarde qui t'aimes"
+  m_text: "Mon petit renard,\r\n\r\nComment se passe la vie dans la vall\xE9e ? Les
+    habitants t\u2019ont-ils bien accueilli ? J\u2019ai d\xE9busqu\xE9 ce sympathique
+    h\xE9ron qui a bien voulu livrer cette lettre pour moi. J\u2019esp\xE8re que
+    tu la trouveras en un seul morceau !\r\n\r\nDans notre for\xEAt, rien de nouveau.
+    La vie est paisible, et la chasse est bonne. L\u2019hiver ne va pas tarder, nous
+    faisons des provisions et pr\xE9parons notre terrier \xE0 l\u2019arriv\xE9e des
+    premiers flocons. Il en est de m\xEAme pour ta vall\xE9e j\u2019ai l\u2019impression.
+    Puisse cette lettre te fournir un peu de chaleur en ces temps difficiles !\r\n\r\nIci
+    le jour se couche, je dois donc m\u2019arr\xEAter ici. J\u2019attends avec impatience
+    de tes nouvelles, mon petit renard. N\u2019oublie pas de te reposer, dormir est
+    tr\xE8s important pour rester en bonne sant\xE9 !\r\n\r\nAmours et bisous,\r\nMaman
+    Renarde."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a0041f0e634ca94ea21aaf90fe7c351, type: 2}
   m_sharedMaterial: {fileID: 7690249358407106209, guid: 6a0041f0e634ca94ea21aaf90fe7c351,
