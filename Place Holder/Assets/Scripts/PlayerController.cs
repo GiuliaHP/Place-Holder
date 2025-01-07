@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 8f;
     public float gravity = -9.8f;
     public float rotationSpeed = 200f;
-    
+
     [Space(20)]
     [Header("Interaction")]
     public KeyCode runKey = KeyCode.LeftShift;
@@ -18,8 +18,15 @@ public class PlayerController : MonoBehaviour
     [Space(20)]
     public CanvasGroup pauseCanvas;
 
-    public Animator foxAnimator;  // Référence à l'Animator
-    
+    public Animator foxAnimator; // Référence à l'Animator
+
+    [Space(20)]
+    [Header("Inactivité")]
+    public float digTriggerTimeMin = 5f; // Temps minimum d'inactivité avant l'animation
+    public float digTriggerTimeMax = 10f; // Temps maximum d'inactivité avant l'animation
+    private float digTimer;
+    private float randomDigTime;
+
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
@@ -28,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        ResetDigTimer();
     }
 
     private void Update()
@@ -70,28 +78,70 @@ public class PlayerController : MonoBehaviour
         }
         else if (pauseBool)
         {
-            // Stopper la vélocité quand le jeu est en pause
-            velocity.y = 0f; // Empêche la chute
+            velocity.y = 0f; // Empêche la chute en pause
         }
 
         // **Mise à jour de l'Animator**
-        UpdateAnimator(move, speed);
+        UpdateAnimator(move, horizontal, speed);
+
+        // Vérifier l'inactivité
+        CheckDig(move);
     }
 
-    private void UpdateAnimator(Vector3 move, float speed)
+    private void UpdateAnimator(Vector3 move, float horizontal, float speed)
     {
         if (foxAnimator != null)
         {
-            // Vérifie si le personnage se déplace
             bool isWalking = move.magnitude > 0.1f && speed == walkSpeed;
             bool isRunning = move.magnitude > 0.1f && speed == runSpeed;
+            bool isStrafingLeft = horizontal < -0.1f;
+            bool isStrafingRight = horizontal > 0.1f;
 
-            // Met à jour les paramètres de l'Animator
             foxAnimator.SetBool("isWalking", isWalking);
             foxAnimator.SetBool("isRunning", isRunning);
             foxAnimator.SetBool("isGrounded", isGrounded);
             foxAnimator.SetFloat("velocityY", velocity.y);
+            foxAnimator.SetBool("isStrafingLeft", isStrafingLeft);
+            foxAnimator.SetBool("isStrafingRight", isStrafingRight);
         }
+    }
+
+    private void CheckDig(Vector3 move)
+    {
+        // Calculer la magnitude totale du déplacement (inclut strafe)
+        float totalMovementMagnitude = move.magnitude + Mathf.Abs(Input.GetAxis("Horizontal"));
+
+        if (totalMovementMagnitude < 0.1f) // Si le personnage ne bouge pas significativement
+        {
+            digTimer += Time.deltaTime;
+
+            // Si le temps d'inactivité dépasse le temps aléatoire
+            if (digTimer >= randomDigTime)
+            {
+                SetDigAnimation(true);
+            }
+        }
+        else
+        {
+            // Si le personnage bouge, désactiver l'animation d'inactivité
+            SetDigAnimation(false);
+            ResetDigTimer();
+        }
+    }
+
+
+    private void SetDigAnimation(bool state)
+    {
+        if (foxAnimator != null)
+        {
+            foxAnimator.SetBool("Dig", state);
+        }
+    }
+
+    private void ResetDigTimer()
+    {
+        digTimer = 0f;
+        randomDigTime = Random.Range(digTriggerTimeMin, digTriggerTimeMax);
     }
 
     public void Pause()
@@ -120,10 +170,5 @@ public class PlayerController : MonoBehaviour
     private void Interact()
     {
         Debug.Log("Interaction déclenchée !");
-    }
-
-    private void StartDialogue()
-    {
-        Debug.Log("Dialogue déclenché !");
     }
 }

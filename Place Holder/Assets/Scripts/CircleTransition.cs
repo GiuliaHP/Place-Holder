@@ -1,6 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CircleTransition : MonoBehaviour
@@ -10,16 +10,33 @@ public class CircleTransition : MonoBehaviour
     public float transitionDuration = 1.0f; // Durée de l'animation
     public string targetScene = ""; // Nom de la scène à charger (si shrink)
 
+    [Header("Audio Settings")]
+    public List<AudioSource> audioSources; // Liste des AudioSources
+    public bool fadeAudio = true; // Activer ou non le fondu audio
+
     private RectTransform maskTransform; // Transform du cercle
     private Canvas canvas;
+    private Dictionary<AudioSource, float> initialVolumes = new Dictionary<AudioSource, float>();
 
     private void Awake()
     {
         maskTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+
+        // Enregistrer les volumes initiaux des AudioSources
+        if (fadeAudio && audioSources != null)
+        {
+            foreach (var audioSource in audioSources)
+            {
+                if (audioSource != null)
+                {
+                    initialVolumes[audioSource] = audioSource.volume;
+                }
+            }
+        }
     }
 
-    private void Start()
+    public void Start()
     {
         if (grow)
         {
@@ -43,8 +60,20 @@ public class CircleTransition : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / transitionDuration;
 
-            // Interpolation linéaire
+            // Interpolation linéaire pour la taille
             maskTransform.sizeDelta = Vector2.Lerp(initialSize, finalSize, t);
+
+            // Fondu audio pour chaque source
+            if (fadeAudio)
+            {
+                foreach (var audioSource in audioSources)
+                {
+                    if (audioSource != null && initialVolumes.ContainsKey(audioSource))
+                    {
+                        audioSource.volume = Mathf.Lerp(0f, initialVolumes[audioSource], t);
+                    }
+                }
+            }
 
             yield return null;
         }
@@ -71,8 +100,20 @@ public class CircleTransition : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / transitionDuration;
 
-            // Interpolation linéaire
+            // Interpolation linéaire pour la taille
             maskTransform.sizeDelta = Vector2.Lerp(initialSize, finalSize, t);
+
+            // Fondu audio pour chaque source
+            if (fadeAudio)
+            {
+                foreach (var audioSource in audioSources)
+                {
+                    if (audioSource != null && initialVolumes.ContainsKey(audioSource))
+                    {
+                        audioSource.volume = Mathf.Lerp(initialVolumes[audioSource], 0f, t);
+                    }
+                }
+            }
 
             yield return null;
         }

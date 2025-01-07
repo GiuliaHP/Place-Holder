@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneObjectActivator : MonoBehaviour
 {
-    public GameObject objectToActivate;
+    public GameObject letterToActivate, triggerToActivate;
     public CircleTransition transitionScript;
     public string newScene = "SnowScene";
 
@@ -13,8 +13,8 @@ public class SceneObjectActivator : MonoBehaviour
         if (PersistentManager.Instance != null && PersistentManager.Instance.triggerObjectInOtherScene)
         {
             transitionScript.targetScene = newScene;
-            objectToActivate.SetActive(true);
-            PersistentManager.Instance.triggerObjectInOtherScene = false;
+            letterToActivate.SetActive(true);
+            triggerToActivate.SetActive(true);
         }
     }
 }

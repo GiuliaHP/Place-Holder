@@ -228,7 +228,7 @@ public class CameraTrigger : MonoBehaviour
         if ((newCamera.name == "héronFocusCamera") && !asHeronBeenZoomed)
         {
             asHeronBeenZoomed = true;
-            yield return new WaitForSeconds(1f);
+            //yield return new WaitForSeconds(1f);
             heronZoomCamera.SetActive(true);
             newCamera.gameObject.SetActive(false);
             yield return new WaitForSeconds(3f);
@@ -294,6 +294,12 @@ public class CameraTrigger : MonoBehaviour
                     if (!string.IsNullOrEmpty(nextAnimToPlay))
                     {
                         playerAnimator.SetBool(nextAnimToPlay, true);
+                        if (nextAnimToPlay == "SleepLoop")
+                        {
+                            ScreenFade scriptInstance = FindObjectOfType<ScreenFade>();
+                            yield return new WaitForSeconds(1f);
+                            scriptInstance.FadeToBlack();
+                        }
                         yield break;
                     }
                     else

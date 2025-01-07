@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class ButtonInteraction : MonoBehaviour
 {
+    [Header("URL to Open")]
+    public string url1 = "https://www.example.com";
+    public string url2 = "https://www.example.com";
     [Space(5)]
     [Header("Animation Durations")]
     public float hoverDuration = 0.2f;
@@ -54,8 +57,15 @@ public class ButtonInteraction : MonoBehaviour
             entryExit.callback.AddListener((eventData) => OnMouseExit(btn));
             trigger.triggers.Add(entryExit);
         }
-
-
+        
+        // Récupérer le composant Button et ajouter un listener pour le clic
+        Button button = GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.AddListener(OpenLink1);
+            button.onClick.AddListener(OpenLink2);
+        }
+        
         ResetToIdle();
     }
 
@@ -138,7 +148,7 @@ public class ButtonInteraction : MonoBehaviour
             if (transitionScript != null)
             {
                 transitionScript.grow = false; // Réduction du cercle
-                transitionScript.StartCoroutine("Start");
+                transitionScript.Start();
             }
         }
         else
@@ -165,9 +175,29 @@ public class ButtonInteraction : MonoBehaviour
             canvasToHide.gameObject.SetActive(false);
         }
     }
-
-    public void Quit()
+    
+    public void OpenLink1()
     {
-        Application.Quit();
+        if (!string.IsNullOrEmpty(url1))
+        {
+            Application.OpenURL(url1);
+        }
+        else
+        {
+            Debug.LogError("URL est vide ou non définie !");
+        }
     }
+    
+    public void OpenLink2()
+    {
+        if (!string.IsNullOrEmpty(url2))
+        {
+            Application.OpenURL(url2);
+        }
+        else
+        {
+            Debug.LogError("URL est vide ou non définie !");
+        }
+    }
+
 }
