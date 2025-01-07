@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -5,6 +6,10 @@ using System.Collections;
 
 public class DialogueManager : MonoBehaviour
 {
+    [Space(20)]
+    public Boolean isHeronDialogue;
+    
+    [Space(20)]
     [Header("UI Elements")]
     public TextMeshProUGUI characterNameText;
     public TextMeshProUGUI dialogueText;
@@ -15,6 +20,7 @@ public class DialogueManager : MonoBehaviour
     public float typingSpeed = 0.05f;
     public KeyCode nextDialogueKey = KeyCode.Space;
 
+    [Space(20)]
     [Space(20)]
     [Header("Dialogue Data")]
     public DialogueData dialogueData;
@@ -46,6 +52,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
+        // Désactive l'entrée pendant l'animation en cours
         if (Input.GetKeyDown(nextDialogueKey) && !isTyping && !isAnimationInProgress)
         {
             NextDialogue();
@@ -77,7 +84,7 @@ public class DialogueManager : MonoBehaviour
     {
         currentDialogueIndex++;
 
-        if (currentDialogueIndex == 2 && objectAnimator != null)
+        if ((currentDialogueIndex == 2 && objectAnimator != null) && isHeronDialogue)
         {
             objectAnimator.SetBool(animatorBoolParameter, true);
 
@@ -92,7 +99,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            EndDialogue();
+            StartCoroutine(EndDialogue());
         }
     }
 
@@ -122,12 +129,19 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            EndDialogue();
+            StartCoroutine(EndDialogue());
         }
     }
 
-    private void EndDialogue()
+    private IEnumerator EndDialogue()
     {
+        if (!isHeronDialogue)
+        {
+            objectAnimator.SetBool(animatorBoolParameter, true);
+            yield return new WaitForSeconds(3f);
+            persMan.isLapinGone = true;
+            animatedObject.gameObject.SetActive(false);
+        }
         dialogueText.text = ""; // Réinitialise le texte
         characterNameText.text = ""; // Réinitialise le nom du personnage
         gameObject.SetActive(false);

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79e6f3614f03bf43a78aba4423b8b0f, type: 3}
+  m_Name: dialogue_Lapin
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - characterName: Lapin
+    dialogueText: Salut Renard !
+    characterSprite: {fileID: 0}
+  - characterName: Lapin
+    dialogueText: "Je crois que H\xE9ron \xE0 une lettre pour toi."
+    characterSprite: {fileID: 0}
+  - characterName: Lapin
+    dialogueText: Tu devrais le trouver avant qu'il ne migre !
+    characterSprite: {fileID: 0}
+  - characterName: Lapin
+    dialogueText: Bon je te laisse...
+    characterSprite: {fileID: 0}
+  - characterName: Lapin
+    dialogueText: My people needs me.
+    characterSprite: {fileID: 0}

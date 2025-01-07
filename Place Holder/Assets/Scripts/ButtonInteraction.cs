@@ -200,4 +200,15 @@ public class ButtonInteraction : MonoBehaviour
         }
     }
 
+    public void Quit()
+    {
+        // Quitte l'application (fonctionne dans un build)
+        Application.Quit();
+
+        // Si en mode éditeur, affiche un message dans la console pour simuler la fermeture
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
+
 }
